@@ -1,0 +1,108 @@
+1.基本认证中间件basicAuth在express4中不存在，
+将https://github.com/expressjs/basic-auth-connect/blob/master/index.js的代码保存到node_modules目录下使用。
+
+2. 将用户密码加密
+使用 middleware/pass，涉及 register.js 和 login.js
+数据库中存放的password仅用于查看，可以不使用该字段；salt和hash即可完成对密码的验证。
+
+3. 设置环境运行
+set NODE_ENV=development
+set PORT= 6666
+supervisor bin/www
+
+4. js函数库
+npm install underscore --save
+
+5. ejs include
+todo：修改ejs引擎使用html后缀文件后，include的文件后缀必须是ejs
+
+6. 验证码
+npm install ccap相当麻烦，采用了直接拷贝的方式；
+网上下载的ccap（cmd下执行 npm docs ccap访问）不带async模块，需要将async拷贝到ccap的node_modules下。
+todo：引入验证码，即require('ccap')后，supervisor 会不断crash，node bin/www 正常。
+
+7. req.session.checkcode
+页面初始加载时，执行了checkcode的get路由，但在登陆时，req.session.checkcode为undefined。
+在点击验证码，重新加载后，登陆时，req.session.checkcode为正确的值。
+
+8. 模板中的layout是什么
+依赖ejs-mate模块
+view/layout下存放母页面
+
+9.  笛风头部尾部渲染交互机制
+
+10. 笛风机票首页渲染交互机制
+
+其他衍生问题：
+1. express.static 返回中间件
+app.use('/static/cruise/plan', express.static('../../data/plan'));
+
+2. favicon在tab页显示（不是地址栏）
+var favicon = require('serve-favicon');
+app.use(favicon(__dirname + '/../../public/img/favicon.ico'));
+
+3. todo 日志
+var logAPI = require('../../common/lib/logAPI');
+var webLog = logAPI.webLog;
+logAPI.use(app, webLog);
+
+4. todo 解决什么问题
+//模板替换无用字符串 start
+var reg = /<script.*?>(?:[\s\S]*?)<\/script>|<input(?:[\s\S]*?)>|undefined|NaN|null/mg;
+function replaceHtml(html) {
+    return html.replace(reg, function (str) {
+        if(str.match(/<\/script>/) || str.match(/<input/)){
+            return str;
+        } else if(str === 'NaN'){
+            return 0;
+        } else {
+            return '';
+        }
+
+    });
+}
+//end
+app.engine('html', function (path, data, fn) {
+    ejs.apply(this, [path, data, function (err, html) {
+        fn.apply(this, [err, replaceHtml(html)]);
+    }]);
+});
+
+5. app.locals
+app.locals._layoutFile = './layouts/main.html';
+
+6. 路由位置
+D:\Work\MNTOUR\branch\modules\web\routes\routes.js
+
+7. 移动设备访问www.dfyoo.com，会跳转到下载页面。
+
+8. memcache 全局变量
+D:\Work\MNTOUR\branch\common\lib\base.js中封装了一层。  偏函数。 get方法感觉没必要去封装
+
+9. todo res.setHeader('Cache-Control', 'no-cache');
+
+10. todo 什么时候设置账号的状态，即调用toSetAccountStatus
+
+11. todo req.session.modifypwd == "distribute"
+distribute ？
+
+12. todo
+loginRedirectUrl 这个cookie有什么用
+
+13. todo 尝试使用 前端ejs
+new EJS({element: 'cardTmpl'}).render(card)
+D:\Work\MNTOUR\branch\public\lib\js\ejs_production.js文件是怎么来的？
+
+14. 首页的楼层对应的前端模板id：cardTmpl
+
+15. 分销、代理用户区别
+/user/loginConfirm
+
+
+
+//问题
+memcache的清除策略
+supervisor 命令行参数
+看 ejs 文档
+node与java交互
+项目结构文档
