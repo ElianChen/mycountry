@@ -14,7 +14,6 @@ require.config({
         }
     }
 });
-
 if (window.jQuery) {
     define('jquery', [], function() {
         return jQuery;
