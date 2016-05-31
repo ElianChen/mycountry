@@ -11,7 +11,6 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MemcachedStore = require('connect-memcached')(session);
 
-var checkLogin = require('./middleware/check-login');
 
 global.dbHandel = require('./database/dbHandel');
 global.db = mongoose.connect("mongodb://localhost:27017/nodedb");
@@ -49,34 +48,12 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
 //app.use(basicAuth('name', 'pwd'));
 
-var index = require('./routes/index');
-var home = require('./routes/home');
-var register = require('./routes/register');
-var login = require('./routes/login');
-var logout = require('./routes/logout');
-var users = require('./routes/users');
-var user_api = require('./api/user');
-var checkcode = require('./api/checkcode');
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/login',login);
-
-app.use('/register',register);
-app.use('/home',
-    checkLogin,
-    function(req,res,next){
-        res.locals.user = req.session.user;
-        next();
-    },
-    home);
-app.use("/logout",logout);
-app.use("/api/user",user_api);
-app.use('/verification/image',checkcode);
+//路由
+var routes = require('./routes/entry');
+routes(app);
 
 
 // catch 404 and forward to error handler

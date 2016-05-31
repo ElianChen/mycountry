@@ -1,0 +1,19 @@
+<% layout('layout/parent') %>
+
+
+<script>
+    window.pageType = 'channel';
+</script>
+
+<div>hello channel</div>
+
+<!--后端使用-->
+<span>出发城市：<%= data.cityFlightInfo.singleTrip[0].orgCityName %></span>
+
+<script type="text/template" id="destDialogTmpl">
+    <div class="tab-panel">
+<!-- 前端使用，不可用% -->
+        <$= people.join(", "); $>
+    </div>
+</script>
+

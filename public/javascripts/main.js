@@ -5,6 +5,7 @@ var baseurl = 'http://127.0.0.1:3000/javascripts/';
 require.config({
     baseUrl: baseurl,
     paths: {
+        'ejs': baseurl + 'lib/ejs.min',
         'bootstrap': baseurl + 'lib/bootstrap.min'
     },
     shim: {
@@ -26,14 +27,10 @@ if (window.jQuery) {
     });
 }
 
-switch (window.pageType) {
-    case 'login':
-        require(['src/login']);
-        break;
-    case 'register':
-        require(['src/register']);
-        break;
-    default:
-        require(['']);
-        break;
-}
+var type = {
+    login:'login',
+    register:'register',
+    channel:'channel/list'
+};
+
+require(['src/'+type[window.pageType]]);

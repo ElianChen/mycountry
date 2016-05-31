@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <%-partial('../partial/seo',{title:''})%>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="stylesheets/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" media="screen">
     <%- block('child').toString() %>
     <style type="text/css">
         .m15{ margin: 15px;}
@@ -14,6 +14,6 @@
 </head>
 <body screen_capture_injected="true">
 <%- body -%>
-<script src="/javascripts/lib/require.min.js" data-main="javascripts/main"></script>
+<script src="/javascripts/lib/require.min.js" data-main="/javascripts/main"></script>
 </body>
 </html>
