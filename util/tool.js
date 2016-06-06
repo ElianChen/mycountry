@@ -11,3 +11,11 @@ exports.writeFile = function (src,file) {
      }
  })
 };
+
+exports.appendFile = function (src,file) {
+    fs.writeFile(file,src,function(err){
+        if(err){
+            throw  err;
+        }
+    })
+};

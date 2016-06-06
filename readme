@@ -89,17 +89,39 @@ distribute ？
 12. todo
 loginRedirectUrl 这个cookie有什么用
 
-13. todo 尝试使用 前端ejs
-new EJS({element: 'cardTmpl'}).render(card)
-D:\Work\MNTOUR\branch\public\lib\js\ejs_production.js文件是怎么来的？
-
 14. 首页的楼层对应的前端模板id：cardTmpl
 
 15. 分销、代理用户区别
 /user/loginConfirm
 
+16. 在服务端把字符串写到文件中
 
+17. todo webpack打包解决什么问题
+img.tuniucdn.com/df/f/20133333/....  修改js文件后怎么在本地生效（文件相对机票来说较少）
 
+18.  url链接合并  （注释掉app.js中的 process.env.NODE_ENV = "production";）
+两个文件、CDN，能打开：http://img1.tuniucdn.com/df/f/20160526001/dist/js/modules/distribute/product/detail.bundle.js,/dist/js/modules/distribute/product/detail.js
+两个文件、本地域名，无法打开：http://yaoyin.dfyoo.com:3001/dist/js/modules/distribute/product/detail.bundle.js,/dist/js/modules/distribute/product/detail.js
+一个文件、本地域名，能打开：http://yaoyin.dfyoo.com:3001/dist/js/modules/distribute/product/detail.bundle.js
+
+19. npm方式启动
+
+20. nodejs发起请求
+
+21. 前端使用ejs模板
+
+22. 增加链接  http://127.0.0.1:3000/channel/list
+
+23. todo session与memcache关联后，req.session.xxx = yyy后，查看memcache，没有找到xxx。
+
+connect-memcached（用在session里了）与 memcached（用set和get方法了） 的区别
+
+经实践：app.js中session的store不使用memcache时（默认在内存中），用户登陆后，当node进程重启后，登陆状态丢失。使用memcache时，node重启后，登陆状态仍有。
+todo 怎么看memcache中保存的session呢    stats、get等方法貌似不行。
+
+24. todo 引入echarts
+
+25.
 //问题
 memcache的清除策略
 supervisor 命令行参数

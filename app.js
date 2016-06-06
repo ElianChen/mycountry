@@ -12,9 +12,7 @@ var session = require('express-session');
 var MemcachedStore = require('connect-memcached')(session);
 
 
-global.dbHandel = require('./database/dbHandel');
-global.db = mongoose.connect("mongodb://localhost:27017/nodedb");
-global.checkcodeEnable = false; //是否启用验证码
+require('./util/config')();
 
 //var basicAuth = require('basic-auth-connect');
 

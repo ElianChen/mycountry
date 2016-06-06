@@ -6,7 +6,8 @@ require.config({
     baseUrl: baseurl,
     paths: {
         'ejs': baseurl + 'lib/ejs.min',
-        'bootstrap': baseurl + 'lib/bootstrap.min'
+        'bootstrap': baseurl + 'lib/bootstrap.min',
+        'echarts': baseurl + 'lib/echarts.min'
     },
     shim: {
         'bootstrap':{
@@ -33,4 +34,8 @@ var type = {
     channel:'channel/list'
 };
 
-require(['src/'+type[window.pageType]]);
+var pageType = window.pageType;
+
+if(typeof pageType !== 'undefined' ){
+    require(['src/'+type[pageType]]);
+}

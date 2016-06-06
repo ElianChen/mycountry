@@ -10,10 +10,11 @@
 <!--后端使用-->
 <span>出发城市：<%= data.cityFlightInfo.singleTrip[0].orgCityName %></span>
 
-<script type="text/template" id="destDialogTmpl">
-    <div class="tab-panel">
+<script type="text/template" id="People">
 <!-- 前端使用，不可用% -->
-        <$= people.join(", "); $>
-    </div>
+    <$= people.join(", "); $>
 </script>
+
+<!-- 为 ECharts 准备一个具备大小（宽高）的Dom -->
+<div id="Pic" style="width: 600px;height:400px;"></div>
 
