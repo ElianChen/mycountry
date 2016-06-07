@@ -12,7 +12,8 @@ var session = require('express-session');
 var MemcachedStore = require('connect-memcached')(session);
 
 
-require('./util/config')();
+require('./util/config');
+global.widget = require('./util/widget');
 
 //var basicAuth = require('basic-auth-connect');
 
@@ -53,6 +54,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 var routes = require('./routes/entry');
 routes(app);
 
+
+//日志模块 开始
+var logAPI = require('./util/logAPI');
+var webLog = logAPI.webLog;
+logAPI.use(app, webLog);
+//日志模块 结束
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -105,5 +112,21 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
+
+////未捕获异常的默认处理
+process.on('uncaughtException', function(err) {
+
+    try {
+
+        console.log(err.stack );
+
+    } catch (e) {
+
+    }
+});
+
+
+
 
 module.exports = app;
