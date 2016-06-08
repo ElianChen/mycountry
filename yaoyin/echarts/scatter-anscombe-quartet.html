@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="./lib/echarts.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var dataAll = [
+    [
+        [10.0, 8.04],
+        [8.0, 6.95],
+        [13.0, 7.58],
+        [9.0, 8.81],
+        [11.0, 8.33],
+        [14.0, 9.96],
+        [6.0, 7.24],
+        [4.0, 4.26],
+        [12.0, 10.84],
+        [7.0, 4.82],
+        [5.0, 5.68]
+    ],
+    [
+        [10.0, 9.14],
+        [8.0, 8.14],
+        [13.0, 8.74],
+        [9.0, 8.77],
+        [11.0, 9.26],
+        [14.0, 8.10],
+        [6.0, 6.13],
+        [4.0, 3.10],
+        [12.0, 9.13],
+        [7.0, 7.26],
+        [5.0, 4.74]
+    ],
+    [
+        [10.0, 7.46],
+        [8.0, 6.77],
+        [13.0, 12.74],
+        [9.0, 7.11],
+        [11.0, 7.81],
+        [14.0, 8.84],
+        [6.0, 6.08],
+        [4.0, 5.39],
+        [12.0, 8.15],
+        [7.0, 6.42],
+        [5.0, 5.73]
+    ],
+    [
+        [8.0, 6.58],
+        [8.0, 5.76],
+        [8.0, 7.71],
+        [8.0, 8.84],
+        [8.0, 8.47],
+        [8.0, 7.04],
+        [8.0, 5.25],
+        [19.0, 12.50],
+        [8.0, 5.56],
+        [8.0, 7.91],
+        [8.0, 6.89]
+    ]
+];
+
+var markLineOpt = {
+    // animation: false,
+    label: {
+        normal: {
+            formatter: 'y = 0.5 * x  + 3',
+            textStyle: {
+                align: 'right'
+            }
+        }
+    },
+    lineStyle: {
+        normal: {
+            color:'#0f0',
+            type:'solid'
+        }
+    },
+    tooltip: {
+        formatter: '我是提示'
+    },
+    data: [[{
+        coord: [0, 3],
+        symbol: 'arrow'//箭头
+    }, {
+        coord: [20, 13],
+        symbol: 'triangle'
+    }]]
+};
+
+var option = {
+    title: {
+        text: 'Anscombe\'s quartet',
+        x: 'center',
+        y: 0
+    },
+    grid: [
+        {show:true,
+        x: '7%', // x相当于left
+        y: '7%', // 相当于top
+        width: '38%',
+        borderColor:'#f00',
+        borderWidth:3,
+        // backgroundColor:'#ff0',
+        // containLabel:true,
+
+        height: '38%'
+    },
+        {x2: '10%',y: '7%', width: '38%', height: '38%'},
+        {x: '7%', bottom: '7%', width: '38%', height: '38%'},
+        {x2: '7%', //相当于right
+            y2: '7%',//相当于bottom
+            width: '38%', height: '38%'}
+    ],
+    tooltip: {
+        formatter: 'Group {a}: ({c})'
+    },
+    xAxis: [//直角坐标系grid中的x轴
+        {
+            gridIndex: 0,
+            interval:1,//配合min、max，不建议使用
+            min: 0,
+            max: 30,
+            silent:false,
+            splitLine:{
+                show:true,
+                lineStyle:{
+                    color:'#00f',
+                    type:'dashed'
+                }
+            },
+
+            position:'top',
+            type:'value',
+            inverse:true,//反向坐标轴
+            // scale:true,
+            nameLocation:'start',
+            nameTextStyle:{
+                color:'#00f'
+            },
+            name:'x轴'
+
+        },
+        // {gridIndex: 0, min: 0, max: 30},//报错
+        {
+            gridIndex: 1,
+            axisLine:{
+                show:true,
+                lineStyle:{
+                    type:'dashed',
+                    color:'#0f0'//坐标轴线
+                }
+            },
+            axisTick:{
+              show:false //隐藏坐标轴刻度线
+            },
+            axisLabel:{
+                margin:20,
+//                formatter:'{value} kg',
+                formatter: function(value,index){
+                  var v = value;
+                  if(1==index){
+                    v = 'begin..' + v + '..end';
+                  }
+                    return v;
+                },
+                rotate:90// -90到90
+            },
+            boundaryGap:['2','1'],// N个刻度
+            type:'value'
+        }, //category 报错
+        {
+            gridIndex: 2,
+            splitLine:{
+                show:false
+            },
+            axisTick:{
+                length:10,
+              inside:true//坐标轴刻度线朝内
+            },
+            axisLabel:{
+              show:false //坐标轴刻度标签
+            },
+            min: 'dataMin', //**斜线被隐藏**
+            max: 20,
+            type:'value'
+        },
+        {
+            gridIndex: 3,
+            min: 0,
+            max: 'dataMax',//**斜线被隐藏**
+            splitArea:{
+                show:true,
+                areaStyle:{
+                    color:['#f00','#0f0','#00f']
+                }
+            },
+            type:'value'}
+    ],
+    yAxis: [
+        {gridIndex: 0, min: 0, max: 50},
+        {gridIndex: 1, min: 0, max: 15},
+        {gridIndex: 2, min: 0, max: 15},
+        {gridIndex: 3, min: 0, max: 15}
+    ],
+//    legend:{
+//        show:true
+//    },
+    series: [
+        {
+            name: 'I',
+            type: 'scatter',//散点图
+//            hoverAnimation:false,
+            symbol:'triangle',
+            xAxisIndex: [0],
+            yAxisIndex: [0],
+            data: dataAll[0],
+            markLine: markLineOpt
+        },
+        {
+            name: 'II',
+            type: 'scatter',
+            xAxisIndex: [1],
+            yAxisIndex: [1],
+            data: dataAll[1],
+            markLine: markLineOpt
+        },
+        {
+            name: 'III',
+            type: 'scatter',
+            xAxisIndex: [2],
+            yAxisIndex: [2],
+            data: dataAll[2],
+//            markPoint:{
+//                label:{
+//                    normal:{
+//                        show:true,
+//                        formatter:'123'
+//                    },
+//                    emphasis:{
+//                        show:true,
+//                        textStyle:{
+//                            color:'#f00'
+//                        }
+//                    }
+//                },
+//                symbol:'diamond',
+//                data:[
+//                    {
+//                        name:'某个坐标',
+//                        coord:[10,20],
+//                        type:'max'
+//                    }
+//                ]
+//            },
+            markLine: markLineOpt
+        },
+        {
+            name: 'IV',
+            type: 'scatter',
+            xAxisIndex: [3],
+            yAxisIndex: [3],
+            data: dataAll[3],
+            markLine: markLineOpt
+        }
+    ]
+};
+if (option && typeof option === "object") {
+    var startTime = +new Date();
+    myChart.setOption(option, true);
+    var endTime = +new Date();
+    var updateTime = endTime - startTime;
+    console.log("Time used:", updateTime);
+}
+       </script>
+   </body>
+</html>

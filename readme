@@ -41,12 +41,7 @@ app.use('/static/cruise/plan', express.static('../../data/plan'));
 var favicon = require('serve-favicon');
 app.use(favicon(__dirname + '/../../public/img/favicon.ico'));
 
-3. todo 日志
-var logAPI = require('../../common/lib/logAPI');
-var webLog = logAPI.webLog;
-logAPI.use(app, webLog);
-
-4. todo 解决什么问题
+3. todo 解决什么问题
 //模板替换无用字符串 start
 var reg = /<script.*?>(?:[\s\S]*?)<\/script>|<input(?:[\s\S]*?)>|undefined|NaN|null/mg;
 function replaceHtml(html) {
@@ -119,9 +114,15 @@ connect-memcached（用在session里了）与 memcached（用set和get方法了�
 经实践：app.js中session的store不使用memcache时（默认在内存中），用户登陆后，当node进程重启后，登陆状态丢失。使用memcache时，node重启后，登陆状态仍有。
 todo 怎么看memcache中保存的session呢    stats、get等方法貌似不行。
 
-24. todo 引入echarts
+24. 引入echarts
 
-25.
+25. todo
+我觉得我们程序首先功能应该是独立的，就是一个功能出异常了，不应该去影响另外一个正常的功能，不应该将整个程序都崩溃掉，
+其次，即使是程序崩溃了，我们也应该有一个让程序自动启动，
+另外，应该去记录日志，方便我们跟踪问题。 //ko
+
+26. 引入日志管理
+
 //问题
 memcache的清除策略
 supervisor 命令行参数
