@@ -64,6 +64,7 @@ option = {
         type: 'category',
         data: hours,
         boundaryGap: false,
+        startAngle:0,// 圆心的正右方
         splitLine: {
             show: true,
             lineStyle: {
@@ -95,10 +96,11 @@ option = {
         symbolSize: function (val) {
             return val[2] * 2;
         },
-        data: data,
         animationDelay: function (idx) {
             return idx * 5;
-        }
+        },
+        data: data
+
     }]
 };;
 if (option && typeof option === "object") {
