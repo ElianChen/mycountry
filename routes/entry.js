@@ -11,6 +11,7 @@ var logout = require('./logout');
 var users = require('./users');
 var channel = require('./channel');
 
+var notFound404 = require('./404');
 
 var user_api = require('../api/user');
 var checkcode = require('../api/checkcode');
@@ -42,6 +43,8 @@ module.exports = function (app) {
     app.use('/logout',logout);
 
     app.use('/channel',channel);
+
+    app.use('/404',notFound404);
 
 
     app.use("/api/user",user_api);
