@@ -74,8 +74,14 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+
   app.use(function(err, req, res, next) {
+
       var status = err.status || 500;
+
+      if(status === 404){
+          res.redirect('404');
+      }
 
       //post时，res.render方法《不会》渲染页面。 get时，res.render方法《会》渲染页面。
       var method = req.method.toLowerCase();
@@ -107,10 +113,15 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+    if(err.status === 404){
+        res.redirect('404');
+    }else{
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
+    }
+
 });
 
 
