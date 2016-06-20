@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-
+var _ = require('lodash');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -14,6 +14,18 @@ var MemcachedStore = require('connect-memcached')(session);
 
 require('./util/config');
 global.widget = require('./util/widget');
+
+
+//ejs模板 辅助函数 开始
+_.extend(app.locals,{
+    ejsHelper:{
+        test: function(param){
+            return param + ' 测试ejs辅助函数';
+        }
+    }
+});
+//ejs模板 辅助函数 结束
+
 
 //var basicAuth = require('basic-auth-connect');
 
