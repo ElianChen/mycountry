@@ -4,6 +4,9 @@
 'use strict';
 
 var index = require('./index');
+
+var test = require('./test');
+
 var home = require('./home');
 var register = require('./register');
 var login = require('./login');
@@ -27,6 +30,9 @@ module.exports = function (app) {
     });
 
     app.use('/', index);
+
+    app.use('/test', test);
+
     app.use('/users', users);
     app.use('/login',login);
 
